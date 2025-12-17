@@ -16,7 +16,6 @@ export default function SignIn(){
       const res = await login(form);
       const body = await res.json();
       if(res.ok){
-        localStorage.setItem("token", body.token || "dummy");
         navigate("/dashboard"); 
       } else {
         setMsg(body.message || "Login failed");
