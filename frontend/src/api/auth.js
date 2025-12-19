@@ -18,3 +18,16 @@ export function login(data){
   });
 }
 
+export function logout() {
+  return fetch(`${BASE}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
+export function me(){
+  return fetch(`${BASE}/api/auth/me`, {
+    credentials: "include"
+  });
+}
+

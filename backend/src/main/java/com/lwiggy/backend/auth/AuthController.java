@@ -1,5 +1,6 @@
 package com.lwiggy.backend.auth;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,7 @@ public class AuthController {
                     cookie.setHttpOnly(true);
                     cookie.setSecure(false); // true in production HTTPS
                     cookie.setPath("/");
-                    cookie.setMaxAge(24 * 60 * 60);
+                    cookie.setMaxAge(60);
 
                     response.addCookie(cookie);
 
@@ -81,5 +82,40 @@ public class AuthController {
                         ResponseEntity.status(401)
                                 .body(Map.of("message", "Invalid credentials"))
                 );
+    }
+
+    // LOGOUT
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+
+        Cookie cookie = new Cookie("AUTH_TOKEN", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0); // <-- delete cookie immediately
+
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok(Map.of("message", "Logged out"));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(@CookieValue(name = "AUTH_TOKEN", required = false) String token) {
+
+        if (token == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        try {
+            Claims claims = jwtUtil.validateToken(token);
+            return ResponseEntity.ok(
+                    Map.of(
+                            "email", claims.getSubject(),
+                            "userId", claims.get("userId")
+                    )
+            );
+        } catch (Exception e) {
+            return ResponseEntity.status(401).build();
+        }
     }
 }
