@@ -3,8 +3,11 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Home from "./pages/Home";
+import RestaurantDetails from "./pages/RestaurantDetails";
+import './index.css';
 
-export default function App(){
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
@@ -12,8 +15,10 @@ export default function App(){
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard" element={
           <ProtectedRoute>
-            <Dashboard/>
+            <Dashboard />
           </ProtectedRoute>} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/restaurant/:id" element={<RestaurantDetails />} />
       </Routes>
     </BrowserRouter>
   );

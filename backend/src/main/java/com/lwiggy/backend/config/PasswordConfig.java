@@ -12,3 +12,16 @@ public class PasswordConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
+/**
+*
+* npm run dev
+* java -jar target/*.jar
+*
+ * nohup java -jar backend/target/*.jar > logs/backend.log 2>&1 &
+ *
+ * cd frontend/
+ *
+ * nohup npm run dev > ../logs/frontend.log 2>&1 &
+ *
+ * */

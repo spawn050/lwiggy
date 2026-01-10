@@ -92,7 +92,7 @@ public class AuthController {
         cookie.setHttpOnly(true);
         cookie.setSecure(false);
         cookie.setPath("/");
-        cookie.setMaxAge(0); // <-- delete cookie immediately
+        cookie.setMaxAge(0);     // <-- delete cookie immediately
 
         response.addCookie(cookie);
 
