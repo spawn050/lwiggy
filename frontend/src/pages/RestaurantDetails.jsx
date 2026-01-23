@@ -1,30 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Typography, Box, Divider, Button, Chip } from "@mui/material";
+import { Container, Typography, Box, Divider, Button, Chip, CircularProgress } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { restaurants } from "../data/restaurants";
+// import { restaurants } from "../data/restaurants"; // DELETED
 import { useCart } from "../context/CartContext";
+import { getRestaurantById } from "../api/restaurant";
 
 export default function RestaurantDetails() {
     const { id } = useParams();
     const { cart, addToCart, removeFromCart } = useCart();
-    const restaurant = restaurants.find((r) => r.id === parseInt(id));
+
+    // State
+    const [restaurant, setRestaurant] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        getRestaurantById(id)
+            .then(data => {
+                setRestaurant(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                setError("Failed to load restaurant");
+                setLoading(false);
+            });
+    }, [id]);
 
     const getQuantity = (itemId) => {
         const item = cart.find((i) => i.id === itemId);
         return item ? item.quantity : 0;
     };
 
+    if (loading) return <Container sx={{ mt: 4, textAlign: "center" }}><CircularProgress /></Container>;
+
     if (!restaurant) {
         return (
             <>
                 <Navbar />
                 <Container sx={{ mt: 4 }}>
-                    <Typography variant="h5">Restaurant not found</Typography>
+                    <Typography variant="h5">{error || "Restaurant not found"}</Typography>
                 </Container>
             </>
         );
@@ -82,7 +101,7 @@ export default function RestaurantDetails() {
                                 <Box sx={{ display: "flex", justifyContent: "space-between", py: 3 }}>
                                     {/* Left Side: Info */}
                                     <Box sx={{ flex: 1, pr: 2 }}>
-                                        {item.isVeg ? (
+                                        {item.isVeg ? ( // Note: Backend uses boolean isVeg, frontend expects boolean. Matched in Entity.
                                             <Box sx={{ border: "1px solid green", width: 16, height: 16, display: "flex", alignItems: "center", justifyContent: "center", mb: 1 }}>
                                                 <Box sx={{ bgcolor: "green", width: 8, height: 8, borderRadius: "50%" }} />
                                             </Box>
