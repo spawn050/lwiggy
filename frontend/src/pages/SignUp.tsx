@@ -6,7 +6,7 @@ import { RegisterForm } from "../types";
 
 export default function SignUp(){
   const [form, setForm] = useState<RegisterForm>({ name:"", email:"", password:"" });
-  const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => 
@@ -17,14 +17,14 @@ export default function SignUp(){
     try {
       const res = await register(form);
       if(res.ok) {
-        setErrorMsg("Registered — redirecting to sign in...");
+        setMsg("Registered — redirecting to sign in...");
         setTimeout(()=>navigate("/"), 800);
       } else {
         const body = await res.json();
-        setErrorMsg(body.message || "Registration failed");
+        setMsg(body.message || "Registration failed");
       }
     } catch (err) {
-      setErrorMsg("Network error");
+      setMsg("Network error");
     }
   };
 
@@ -37,7 +37,7 @@ export default function SignUp(){
         <TextField label="Password" name="password" value={form.password} onChange={onChange} type="password" fullWidth />
         <Button variant="contained" onClick={onSubmit}>Sign up</Button>
         <Typography variant="body2">Already have an account? <Link to="/">Sign in</Link></Typography>
-        {errorMsg && <Typography color="error">{errorMsg}</Typography>}
+        {msg && <Typography color="error">{msg}</Typography>}
       </Box>
     </Container>
   );
