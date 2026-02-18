@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp(){
   const [form, setForm] = useState({ name:"", email:"", password:"" });
-  const [msg, setMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
   const onChange = e => setForm({...form, [e.target.name]: e.target.value});
@@ -15,14 +15,14 @@ export default function SignUp(){
     try {
       const res = await register(form);
       if(res.ok) {
-        setMsg("Registered — redirecting to sign in...");
+        setErrorMsg("Registered — redirecting to sign in...");
         setTimeout(()=>navigate("/"), 800);
       } else {
         const body = await res.json();
-        setMsg(body.message || "Registration failed");
+        setErrorMsg(body.message || "Registration failed");
       }
     } catch (err) {
-      setMsg("Network error");
+      setErrorMsg("Network error");
     }
   };
 
@@ -35,7 +35,7 @@ export default function SignUp(){
         <TextField label="Password" name="password" value={form.password} onChange={onChange} type="password" fullWidth />
         <Button variant="contained" onClick={onSubmit}>Sign up</Button>
         <Typography variant="body2">Already have an account? <Link to="/">Sign in</Link></Typography>
-        {msg && <Typography color="error">{msg}</Typography>}
+        {errorMsg && <Typography color="error">{errorMsg}</Typography>}
       </Box>
     </Container>
   );

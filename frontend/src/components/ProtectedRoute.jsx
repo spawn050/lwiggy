@@ -11,10 +11,12 @@ export default function ProtectedRoute({ children }) {
       .catch(() => setAllowed(false));
   }, []);
 
-  if (allowed === null) 
+  if (allowed === null) {
     return <div>Loading...</div>;
-  if (!allowed) 
+  }
+  if (!allowed) {
     return <Navigate to="/" />;
+  }
 
   return children;
 }
