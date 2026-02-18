@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { me } from "../api/auth";
+import { ProtectedRouteProps } from "../types";
 
-export default function ProtectedRoute({ children }) {
-  const [allowed, setAllowed] = useState(null);
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const [allowed, setAllowed] = useState<boolean | null>(null);
 
   useEffect(() => {
     me()
