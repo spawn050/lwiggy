@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { me } from "../api/auth";
+import { ProtectedRouteProps } from "../types";
 
-export default function ProtectedRoute({ children }) {
-  const [allowed, setAllowed] = useState(null);
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const [allowed, setAllowed] = useState<boolean | null>(null);
 
   useEffect(() => {
     me()
@@ -11,10 +12,12 @@ export default function ProtectedRoute({ children }) {
       .catch(() => setAllowed(false));
   }, []);
 
-  if (allowed === null) 
+  if (allowed === null) {
     return <div>Loading...</div>;
-  if (!allowed) 
+  }
+  if (!allowed) {
     return <Navigate to="/" />;
+  }
 
   return children;
 }

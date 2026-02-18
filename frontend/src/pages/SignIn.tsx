@@ -1,27 +1,29 @@
-import React, {useState} from "react";
+import { useState } from "react";
 import { TextField, Button, Container, Box, Typography } from "@mui/material";
 import { login } from "../api/auth";
 import { useNavigate } from "react-router-dom";
+import { LoginForm } from "../types";
 
 export default function SignIn(){
-  const [form, setForm] = useState({ email:"", password:"" });
-  const [msg, setMsg] = useState("");
+  const [form, setForm] = useState<LoginForm>({ email:"", password:"" });
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
 
-  const onChange = e => setForm({...form, [e.target.name]: e.target.value});
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => 
+    setForm({...form, [e.target.name]: e.target.value});
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const res = await login(form);
-      const body = await res.json();
       if(res.ok){
         navigate("/dashboard"); 
       } else {
-        setMsg(body.message || "Login failed");
+        const body = await res.json();
+        setErrorMsg(body.message || "Login failed");
       }
     } catch (err) {
-      setMsg("Network error");
+      setErrorMsg("Network error");
     }
   };
 
@@ -33,7 +35,7 @@ export default function SignIn(){
         <TextField label="Password" name="password" type="password" value={form.password} onChange={onChange} fullWidth />
         <Button variant="contained" onClick={onSubmit}>Sign in</Button>
         <Typography variant="body2">Don't have an account? <a href="/signup">Sign up</a></Typography>
-        {msg && <Typography color="error">{msg}</Typography>}
+        {errorMsg && <Typography color="error">{errorMsg}</Typography>}
       </Box>
     </Container>
   );

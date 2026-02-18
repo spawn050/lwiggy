@@ -1,16 +1,18 @@
-import React, {useState} from "react";
+import { useState } from "react";
 import { TextField, Button, Container, Box, Typography } from "@mui/material";
 import { register } from "../api/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { RegisterForm } from "../types";
 
 export default function SignUp(){
-  const [form, setForm] = useState({ name:"", email:"", password:"" });
+  const [form, setForm] = useState<RegisterForm>({ name:"", email:"", password:"" });
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
-  const onChange = e => setForm({...form, [e.target.name]: e.target.value});
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => 
+    setForm({...form, [e.target.name]: e.target.value});
 
-  const onSubmit = async (e) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const res = await register(form);
