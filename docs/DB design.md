@@ -1,0 +1,51 @@
+### Main Entities:
+- `restaurant`
+- `user`
+- `order`
+
+
+### DB design:
+
+- tables:
+	- `users`
+		- id (PK, unique)
+		- name
+		- email (unique)
+		- password_hash
+		- address (string)
+		- pincode (not null)
+	- `restaurants
+		- id (PK, unique)
+		- name
+		- address (string)
+		- pincode (not null)
+		- image_url
+		- rating
+		- rating_count
+	- `orders`
+		- id (PK, unique)
+		- user_id (FK)
+		- delivery_address
+		- delivery_pincode
+		- restaurant_id (FK)
+		- user_rating
+		- order_placed_time
+		- order_delivered_time
+		- status
+		- total_price
+	- order_items
+		- id (PK)
+		- order_id (FK, indexed)
+		- food_item_id (FK)
+		- quantity
+		- price
+	- food_items
+		- id (PK)
+		- restaurant_id (FK)
+		- name
+		- cuisine_id (FK)
+		- price
+		- image_url
+	- cuisine
+		- id (PK, unique)
+		- name (unique)
