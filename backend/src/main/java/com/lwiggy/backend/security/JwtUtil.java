@@ -1,4 +1,4 @@
-package com.lwiggy.backend.auth;
+package com.lwiggy.backend.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
