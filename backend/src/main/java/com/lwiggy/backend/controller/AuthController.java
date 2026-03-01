@@ -31,12 +31,26 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        if (repo.findByEmail(user.getEmail()).isPresent()) {
+    public ResponseEntity<?> register(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+        String password = body.get("password");
+        String name = body.get("name");
+        String address = body.get("address");
+        String pincode = body.get("pincode");
+
+        if (repo.findByEmail(email).isPresent()) {
             return ResponseEntity.badRequest()
                     .body(Map.of("message", "Email already exists"));
         }
-        user.setPasswordHash(encoder.encode(user.getPasswordHash()));
+
+        var user = User.builder()
+                .name(name)
+                .email(email)
+                .passwordHash(encoder.encode(password))
+                .address(address)
+                .pincode(pincode)
+                .build();
+
         repo.save(user);
         return ResponseEntity.ok(Map.of("message", "Registered"));
     }
