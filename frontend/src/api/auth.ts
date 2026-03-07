@@ -1,5 +1,5 @@
 import { LoginForm, RegisterForm } from '../types';
-import { API_URLS } from './apiConstants';
+import { API_URLS } from './ApiConstants';
 
 export function register(data: RegisterForm): Promise<Response> {
   return fetch(API_URLS.REGISTER, {

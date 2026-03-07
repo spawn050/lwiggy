@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { API_URLS } from "../api/apiConstants";
+import { API_URLS } from "../api/ApiConstants";
 
 const mockUser = {
     id: 1,

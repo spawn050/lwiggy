@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { me } from "../api/auth";
+import { me } from "../api/Auth";
 import { ProtectedRouteProps } from "../types";
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {

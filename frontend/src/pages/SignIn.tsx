@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextField, Button, Container, Box, Typography } from "@mui/material";
-import { login } from "../api/auth";
+import { login } from "../api/Auth";
 import { useNavigate } from "react-router-dom";
 import { LoginForm } from "../types";
 
