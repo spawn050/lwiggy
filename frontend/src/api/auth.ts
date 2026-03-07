@@ -1,9 +1,8 @@
 import { LoginForm, RegisterForm } from '../types';
-
-const BASE = "http://localhost:8080";
+import { API_URLS } from './apiConstants';
 
 export function register(data: RegisterForm): Promise<Response> {
-  return fetch(`${BASE}/api/auth/register`, {
+  return fetch(API_URLS.REGISTER, {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     credentials: "include",
@@ -12,7 +11,7 @@ export function register(data: RegisterForm): Promise<Response> {
 }
 
 export function login(data: LoginForm): Promise<Response> {
-  return fetch(`${BASE}/api/auth/login`, {
+  return fetch(API_URLS.LOGIN, {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     credentials: "include",
@@ -21,14 +20,14 @@ export function login(data: LoginForm): Promise<Response> {
 }
 
 export function logout(): Promise<Response> {
-  return fetch(`${BASE}/api/auth/logout`, {
+  return fetch(API_URLS.LOGOUT, {
     method: "POST",
     credentials: "include",
   });
 }
 
 export function me(): Promise<Response> {
-  return fetch(`${BASE}/api/auth/me`, {
+  return fetch(API_URLS.ME, {
     credentials: "include"
   });
 }
