@@ -49,5 +49,23 @@ export const mockHandlers = [
             null,
             { headers: { 'set-cookie': 'authToken=; Max-Age: 0' } }
         );
-    })
+    }),
+
+    http.get(API_URLS.RESTAURANTS, ({ cookies }) => {
+        if (!cookies.authToken) {
+            return new HttpResponse(null, { status: 401 })
+        }
+
+        return HttpResponse.json(
+            {
+                success: true,
+                data: mockRestaurants
+            },
+            { status: 200 }
+        );
+    }),
 ]
+
+const mockRestaurants = [
+    {"name": "Shiv Sagar"}, {"name": "Sukh Sagar"}, {"name": "Shanti Sagar"}, 
+];

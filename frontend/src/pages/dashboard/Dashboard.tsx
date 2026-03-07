@@ -1,23 +1,34 @@
-import { Button, Container, Typography } from "@mui/material";
-import { logout } from "../../api/Auth";
-import { useNavigate } from "react-router-dom";
+import { Card, CardContent, Container, Stack, Typography } from "@mui/material";
 import Navbar from "../../components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { fetchRestaurants } from "../../api/Api";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
   const [restaurants, setRestaurants] = useState([]);
 
-  // const handleLogout = async () => {
-  //   await logout();
-  //   navigate("/");
-  // };
+  useEffect(() => {
+    console.log("useEffect called")
+    const loadRestaurants = async () => {
+      const response = await fetchRestaurants();
+      const data = await response.json();
+      setRestaurants(data.data as any);
+    };
+    loadRestaurants();
+  }, []);
 
   return (
     <Container sx={{ mt: 8 }}>
       <Navbar></Navbar>
-      <Typography variant="h5">Dashboard</Typography>
-      {/* <Button variant="contained" color="error" sx={{ mt: 2 }} onClick={handleLogout}>Logout</Button> */}
+
+      {restaurants.map(restaurant => {
+        return (
+          <Card variant="outlined" sx={{display: 'flex'}}>
+            <Stack direction="row" sx={{ width: '100%' }}>
+              <CardContent sx={{ flex: '1 0 auto' }}>{restaurant.name}</CardContent>
+            </Stack>
+          </Card>
+        );
+      })}
 
       {/* // adding some dummy text to extend the page for dev testing */}
       {(() => {

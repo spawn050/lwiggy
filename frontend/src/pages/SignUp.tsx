@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextField, Button, Container, Box, Typography } from "@mui/material";
-import { register } from "../api/Auth";
+import { register } from "../api/Api";
 import { Link, useNavigate } from "react-router-dom";
 import { RegisterForm } from "../types";
 

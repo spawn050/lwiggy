@@ -7,7 +7,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { APP_NAME } from '../constants/Constants';
 import { Button } from '@mui/material';
-import { logout } from '../api/Auth';
+import { logout } from '../api/Api';
 import { useNavigate } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({

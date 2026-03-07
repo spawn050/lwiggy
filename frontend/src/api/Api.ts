@@ -1,6 +1,11 @@
 import { LoginForm, RegisterForm } from '../types';
 import { API_URLS } from './ApiConstants';
 
+export function fetchRestaurants() : Promise<Response> {
+  return fetch(API_URLS.RESTAURANTS, {credentials: "include"});
+}
+
+//////////////////////////////////////////////////////// AUTH APIS //////////////////////////////////////////////////////// 
 export function register(data: RegisterForm): Promise<Response> {
   return fetch(API_URLS.REGISTER, {
     method: "POST",
