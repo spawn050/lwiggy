@@ -64,7 +64,6 @@ export default function Navbar() {
                         </Box>
                     ) : (
                         <>
-                            {/* Logo */}
                             <Box
                                 onClick={() => navigate('/')}
                                 sx={{ cursor: 'pointer', display: 'flex', alignItems: 'center', flexShrink: 0 }}
@@ -72,7 +71,6 @@ export default function Navbar() {
                                 <Box component="img" src="/logo.svg" alt="Lwiggy" sx={{ height: 40 }} />
                             </Box>
 
-                            {/* Search field — desktop only */}
                             <Box
                                 sx={{
                                     flex: 1,
@@ -93,7 +91,6 @@ export default function Navbar() {
                                 />
                             </Box>
 
-                            {/* Cart + Auth — desktop only */}
                             <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 1, flexShrink: 0 }}>
                                 <IconButton onClick={() => navigate('/cart')} sx={{ color: '#3d4152' }}>
                                     <Badge badgeContent={cartCount} color="primary">
@@ -126,7 +123,6 @@ export default function Navbar() {
                                 )}
                             </Box>
 
-                            {/* Mobile: search icon + hamburger */}
                             <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 0.5 }}>
                                 <IconButton onClick={() => setMobileSearchOpen(true)} sx={{ color: '#3d4152' }}>
                                     <SearchIcon />
@@ -140,7 +136,6 @@ export default function Navbar() {
                 </Toolbar>
             </Container>
 
-            {/* Mobile drawer */}
             <Drawer
                 anchor="right"
                 open={mobileOpen}
