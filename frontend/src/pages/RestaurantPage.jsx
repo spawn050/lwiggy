@@ -1,66 +1,45 @@
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Box, Container, Typography, Divider, Chip } from '@mui/material'
+import { Box, Container, Typography, Divider, Chip, CircularProgress } from '@mui/material'
 import StarIcon from '@mui/icons-material/Star'
 import MenuItemCard from '../components/MenuItemCard.jsx'
-
-const mockRestaurant = {
-    id: 1,
-    name: 'Tandoor Palace',
-    address: 'Connaught Place, New Delhi',
-    pincode: '110001',
-    image_url: 'https://picsum.photos/seed/rest1/800/400',
-    rating: 4.3,
-    rating_count: 2341,
-    cuisines: ['North Indian', 'Mughlai'],
-    menu: [
-        {
-            id: 101,
-            name: 'Butter Chicken',
-            price: 280,
-            image_url: 'https://picsum.photos/seed/item101/150/150',
-            is_veg: false,
-        },
-        {
-            id: 102,
-            name: 'Dal Makhani',
-            price: 220,
-            image_url: 'https://picsum.photos/seed/item102/150/150',
-            is_veg: true,
-        },
-        {
-            id: 103,
-            name: 'Garlic Naan',
-            price: 60,
-            image_url: 'https://picsum.photos/seed/item103/150/150',
-            is_veg: true,
-        },
-        {
-            id: 104,
-            name: 'Seekh Kebab',
-            price: 320,
-            image_url: 'https://picsum.photos/seed/item104/150/150',
-            is_veg: false,
-        },
-        {
-            id: 105,
-            name: 'Paneer Tikka',
-            price: 260,
-            image_url: 'https://picsum.photos/seed/item105/150/150',
-            is_veg: true,
-        },
-        {
-            id: 106,
-            name: 'Chicken Biryani',
-            price: 350,
-            image_url: 'https://picsum.photos/seed/item106/150/150',
-            is_veg: false,
-        },
-    ],
-}
+import { getRestaurantById } from '../services/restaurantService.js'
 
 export default function RestaurantPage() {
     const { id } = useParams()
-    const restaurant = mockRestaurant
+    const [restaurant, setRestaurant] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState('')
+
+    useEffect(() => {
+        async function fetchRestaurant() {
+            try {
+                const data = await getRestaurantById(id)
+                setRestaurant(data)
+            } catch (err) {
+                setError(err.message)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchRestaurant()
+    }, [id])
+
+    if (loading) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+                <CircularProgress sx={{ color: '#FF5200' }} />
+            </Box>
+        )
+    }
+
+    if (error) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 8 }}>
+                <Typography color="error">{error}</Typography>
+            </Box>
+        )
+    }
 
     return (
         <Box>
