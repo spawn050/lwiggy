@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx'
 import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
 import SignIn from './pages/SignIn.jsx'
+import RestaurantPage from './pages/RestaurantPage.jsx'
 
 function AppContent() {
   const location = useLocation()
@@ -16,6 +17,7 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/restaurants/:id" element={<RestaurantPage />} />
         </Routes>
       </Box>
       {!hideLayout && <Footer />}
