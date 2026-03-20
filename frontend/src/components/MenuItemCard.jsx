@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
 import { addToCart, removeFromCart } from '../store/cartSlice.js'
 
-export default function MenuItemCard({ item }) {
+export default function MenuItemCard({ item, restaurantId, restaurantName, restaurantAddress, restaurantImageUrl }) {
     const dispatch = useDispatch()
     const cartItem = useSelector((state) =>
         state.cart.items.find((i) => i.id === item.id)
@@ -65,7 +65,7 @@ export default function MenuItemCard({ item }) {
                             variant="outlined"
                             size="small"
                             fullWidth
-                            onClick={() => dispatch(addToCart(item))}
+                            onClick={() => dispatch(addToCart({ ...item, restaurantId, restaurantName, restaurantAddress, restaurantImageUrl }))}
                             sx={{
                                 bgcolor: '#fff',
                                 color: '#1ba672',
@@ -101,7 +101,7 @@ export default function MenuItemCard({ item }) {
                             </Typography>
                             <IconButton
                                 size="small"
-                                onClick={() => dispatch(addToCart(item))}
+                                onClick={() => dispatch(addToCart({ ...item, restaurantId, restaurantName, restaurantAddress, restaurantImageUrl }))}
                                 sx={{ color: '#1ba672', p: 0.3 }}
                             >
                                 <AddIcon fontSize="small" />

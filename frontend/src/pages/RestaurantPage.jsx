@@ -105,7 +105,14 @@ export default function RestaurantPage() {
 
                 <Box>
                     {restaurant.menu.map((item) => (
-                        <MenuItemCard key={item.id} item={item} />
+                        <MenuItemCard
+                            key={item.id}
+                            item={item}
+                            restaurantId={restaurant.id}
+                            restaurantName={restaurant.name}
+                            restaurantAddress={restaurant.address}
+                            restaurantImageUrl={restaurant.image_url}
+                        />
                     ))}
                 </Box>
             </Container>

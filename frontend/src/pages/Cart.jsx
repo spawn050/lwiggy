@@ -1,24 +1,29 @@
 import { Box, Container, Typography, Paper, Divider, Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
-
-const DUMMY_GROUPS = [
-    {
-        restaurantId: 1,
-        restaurantName: 'Tandoor Palace',
-        restaurantAddress: 'Connaught Place, New Delhi',
-        restaurantImageUrl: 'https://picsum.photos/seed/rest1/800/400',
-        items: [
-            { id: 101, name: 'Butter Chicken', price: 280, quantity: 2 },
-            { id: 103, name: 'Garlic Naan', price: 60, quantity: 3 },
-        ],
-    },
-]
 
 export default function Cart() {
     const navigate = useNavigate()
+    const cartItems = useSelector((state) => state.cart.items)
 
-    if (DUMMY_GROUPS.length === 0) {
+    const groups = cartItems.reduce((acc, item) => {
+        if (!acc[item.restaurantId]) {
+            acc[item.restaurantId] = {
+                restaurantId: item.restaurantId,
+                restaurantName: item.restaurantName,
+                restaurantAddress: item.restaurantAddress,
+                restaurantImageUrl: item.restaurantImageUrl,
+                items: [],
+            }
+        }
+        acc[item.restaurantId].items.push(item)
+        return acc
+    }, {})
+
+    const groupList = Object.values(groups)
+
+    if (groupList.length === 0) {
         return (
             <Box sx={{ bgcolor: '#E9ECEE', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Box sx={{ textAlign: 'center' }}>
@@ -44,7 +49,7 @@ export default function Cart() {
     return (
         <Box sx={{ bgcolor: '#E9ECEE', minHeight: '100vh', py: 4 }}>
             <Container maxWidth="sm">
-                {DUMMY_GROUPS.map((group) => {
+                {groupList.map((group) => {
                     const total = group.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
                     return (
