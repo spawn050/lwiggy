@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx'
 import SignIn from './pages/SignIn.jsx'
 import RestaurantPage from './pages/RestaurantPage.jsx'
 import SignUp from './pages/SignUp.jsx'
+import Cart from './pages/Cart.jsx'
 
 function AppContent() {
   const location = useLocation()
@@ -20,6 +21,7 @@ function AppContent() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/restaurants/:id" element={<RestaurantPage />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </Box>
       {!hideFooter && <Footer />}

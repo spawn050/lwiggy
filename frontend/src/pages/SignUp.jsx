@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Box, TextField, Button, Typography, MenuItem } from '@mui/material'
+import { useDispatch } from 'react-redux'
+import { login } from '../store/authSlice.js'
 
 const CITIES = ['Mumbai', 'Bangalore', 'Pune']
 
@@ -12,9 +14,11 @@ export default function SignUp() {
     const [city, setCity] = useState('')
     const [pincode, setPincode] = useState('')
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     async function handleSubmit(e) {
         e.preventDefault()
+        dispatch(login({ name, email }))
         navigate('/')
     }
 
