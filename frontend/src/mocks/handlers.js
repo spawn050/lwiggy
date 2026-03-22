@@ -170,4 +170,18 @@ export const handlers = [
         }
         return HttpResponse.json({ ...restaurant, menu: MOCK_MENUS[id] ?? [] })
     }),
+
+    http.post('/api/orders', async ({ request }) => {
+        const body = await request.json()
+        return HttpResponse.json(
+            {
+                id: Math.floor(Math.random() * 1000) + 1,
+                status: 'PLACED',
+                total_price: body.total_price,
+                restaurant_id: body.restaurant_id,
+                order_placed_time: new Date().toISOString(),
+            },
+            { status: 201 }
+        )
+    }),
 ]

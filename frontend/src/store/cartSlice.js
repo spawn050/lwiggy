@@ -32,8 +32,14 @@ const cartSlice = createSlice({
       state.items = []
       state.count = 0
     },
+    clearRestaurantItems(state, action) {
+      const removedItems = state.items.filter((i) => i.restaurantId === action.payload)
+      const removedCount = removedItems.reduce((sum, i) => sum + i.quantity, 0)
+      state.items = state.items.filter((i) => i.restaurantId !== action.payload)
+      state.count -= removedCount
+    },
   },
 })
 
-export const { addToCart, removeFromCart, clearCart } = cartSlice.actions
+export const { addToCart, removeFromCart, clearCart, clearRestaurantItems } = cartSlice.actions
 export default cartSlice.reducer
