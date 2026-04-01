@@ -8,7 +8,7 @@ const cartSlice = createSlice({
   },
   reducers: {
     addToCart(state, action) {
-      const existing = state.items.find((i) => i.id === action.payload.id)
+      const existing = state.items.find((item) => item.id === action.payload.id)
       if (existing) {
         existing.quantity += 1
       } else {
@@ -17,12 +17,12 @@ const cartSlice = createSlice({
       state.count += 1
     },
     removeFromCart(state, action) {
-      const existing = state.items.find((i) => i.id === action.payload)
+      const existing = state.items.find((item) => item.id === action.payload)
       if (!existing) {
         return
       }
       if (existing.quantity === 1) {
-        state.items = state.items.filter((i) => i.id !== action.payload)
+        state.items = state.items.filter((item) => item.id !== action.payload)
       } else {
         existing.quantity -= 1
       }
@@ -33,9 +33,9 @@ const cartSlice = createSlice({
       state.count = 0
     },
     clearRestaurantItems(state, action) {
-      const removedItems = state.items.filter((i) => i.restaurantId === action.payload)
-      const removedCount = removedItems.reduce((sum, i) => sum + i.quantity, 0)
-      state.items = state.items.filter((i) => i.restaurantId !== action.payload)
+      const removedItems = state.items.filter((item) => item.restaurantId === action.payload)
+      const removedCount = removedItems.reduce((sum, item) => sum + item.quantity, 0)
+      state.items = state.items.filter((item) => item.restaurantId !== action.payload)
       state.count -= removedCount
     },
   },
