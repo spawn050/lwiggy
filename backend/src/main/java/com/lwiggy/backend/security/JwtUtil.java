@@ -15,7 +15,7 @@ public class JwtUtil {
     private String secret;
 
     @Value("${jwt.expiration}")
-    private long expiration;
+    private long expirationMs;
 
     private Key getKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
@@ -26,7 +26,7 @@ public class JwtUtil {
                 .setSubject(email)
                 .claim("userId", userId)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationMs))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

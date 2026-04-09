@@ -17,4 +17,3 @@
 2. npm install
 3. npm run dev
 4. Frontend will start at http://localhost:5173
-
