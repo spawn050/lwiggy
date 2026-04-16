@@ -8,6 +8,7 @@ import com.lwiggy.backend.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RestaurantService {
@@ -32,6 +33,7 @@ public class RestaurantService {
                         .imageUrl(r.getImageUrl())
                         .rating(r.getRating())
                         .ratingCount(r.getRatingCount())
+                        .cuisines(foodItemRepository.findDistinctCuisineNamesByRestaurantId(r.getId()))
                         .build())
                 .toList();
     }
@@ -51,6 +53,7 @@ public class RestaurantService {
                         .imageUrl(r.getImageUrl())
                         .rating(r.getRating())
                         .ratingCount(r.getRatingCount())
+                        .cuisines(foodItemRepository.findDistinctCuisineNamesByRestaurantId(r.getId()))
                         .build())
                 .toList();
     }
@@ -70,6 +73,12 @@ public class RestaurantService {
                         .build())
                 .toList();
 
+        List<String> cuisines = foodItems.stream()
+                .map(FoodItemDTO::getCuisineName)
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
+
         return RestaurantDTO.builder()
                 .id(restaurant.getId())
                 .name(restaurant.getName())
@@ -79,6 +88,7 @@ public class RestaurantService {
                 .rating(restaurant.getRating())
                 .ratingCount(restaurant.getRatingCount())
                 .foodItems(foodItems)
+                .cuisines(cuisines)
                 .build();
     }
 }

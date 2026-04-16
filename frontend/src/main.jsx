@@ -7,7 +7,7 @@ import theme from './theme.js'
 import App from './App.jsx'
 
 async function enableMocking() {
-    if (import.meta.env.DEV) {
+    if (import.meta.env.VITE_ENABLE_MOCKS == 'true') {
         const { worker } = await import('./mocks/browser.js')
         return worker.start({ onUnhandledRequest: 'bypass' })
     }

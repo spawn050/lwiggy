@@ -61,10 +61,10 @@ export default function RestaurantCard({ restaurant }) {
                     {address}
                 </Typography>
                 <Typography variant="caption" color="#686b78" display="block">
-                    {rating_count.toLocaleString()} ratings
+                    {(rating_count ?? 0).toLocaleString()} ratings
                 </Typography>
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5, mt: 1 }}>
-                    {cuisines.slice(0, 3).map((cuisine) => (
+                    {(cuisines ?? []).slice(0, 3).map((cuisine) => (
                         <Chip
                             key={cuisine}
                             label={cuisine}

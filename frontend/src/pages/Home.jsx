@@ -11,7 +11,7 @@ export default function Home() {
     useEffect(() => {
         async function fetchRestaurants() {
             try {
-                const data = await getRestaurants('110001')
+                const data = await getRestaurants('400001')
                 setRestaurants(data)
             } catch (err) {
                 setError(err.message)

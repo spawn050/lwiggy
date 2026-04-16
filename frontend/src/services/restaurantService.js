@@ -1,5 +1,7 @@
 export async function getRestaurants(pincode) {
-    const res = await fetch(`/api/restaurants?location=${pincode}`)
+    const res = await fetch(`/api/restaurants?location=${pincode}`, {
+        credentials: 'include',
+    })
     if (!res.ok) {
         throw new Error('Failed to fetch restaurants')
     }
@@ -7,7 +9,9 @@ export async function getRestaurants(pincode) {
 }
 
 export async function getRestaurantById(id) {
-    const res = await fetch(`/api/restaurants/${id}`)
+    const res = await fetch(`/api/restaurants/${id}`, {
+        credentials: 'include',
+    })
     if (!res.ok) {
         throw new Error('Restaurant not found')
     }

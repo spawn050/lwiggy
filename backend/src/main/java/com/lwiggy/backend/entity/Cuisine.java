@@ -5,8 +5,10 @@ import lombok.*;
 
 @Entity
 @Table(name = "cuisine")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Cuisine {
 

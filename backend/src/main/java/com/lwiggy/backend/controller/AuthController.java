@@ -68,7 +68,7 @@ public class AuthController {
                     cookie.setHttpOnly(true);
                     cookie.setSecure(false);
                     cookie.setPath("/");
-                    cookie.setMaxAge(60);
+                    cookie.setMaxAge(86400);
                     response.addCookie(cookie);
                     return ResponseEntity.ok(Map.of("email", user.getEmail()));
                 })

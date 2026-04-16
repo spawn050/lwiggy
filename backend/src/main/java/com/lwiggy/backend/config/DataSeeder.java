@@ -52,13 +52,13 @@ public class DataSeeder implements CommandLineRunner {
 
         // Pune restaurants (pincode 411001)
         Restaurant puneKitchen = restaurantRepository.save(Restaurant.builder()
-                        .name("Pune Kitchen")
-                        .address("8 FC Road, Pune")
-                        .pincode("411001")
-                        .imageUrl("https://placehold.co/400x200?text=Pune+Kitchen")
-                        .rating(4.5)
-                        .ratingCount(310)
-                        .build());
+                .name("Pune Kitchen")
+                .address("8 FC Road, Pune")
+                .pincode("411001")
+                .imageUrl("https://placehold.co/400x200?text=Pune+Kitchen")
+                .rating(4.5)
+                .ratingCount(310)
+                .build());
 
         Restaurant pizzaVilla = restaurantRepository.save(Restaurant.builder()
                 .name("Pizza Villa")
@@ -87,6 +87,34 @@ public class DataSeeder implements CommandLineRunner {
                 .rating(4.1)
                 .ratingCount(198)
                 .build());
+
+        // New Delhi restaurants (pincode 110001)
+        Restaurant tandoorPalace = restaurantRepository.save(Restaurant.builder()
+                .name("Tandoor Palace")
+                .address("Connaught Place, New Delhi")
+                .pincode("110001")
+                .imageUrl("https://placehold.co/400x200?text=Tandoor+Palace")
+                .rating(4.3)
+                .ratingCount(2341)
+                .build());
+
+        Restaurant biryaniBrothers = restaurantRepository.save(Restaurant.builder()
+                .name("Biryani Brothers")
+                .address("Karol Bagh, New Delhi")
+                .pincode("110001")
+                .imageUrl("https://placehold.co/400x200?text=Biryani+Brothers")
+                .rating(4.6)
+                .ratingCount(5230)
+                .build());
+
+        // Food items — Tandoor Palace
+        foodItemRepository.save(FoodItem.builder().name("Butter Chicken").price(new BigDecimal("280")).restaurant(tandoorPalace).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Dal Makhani").price(new BigDecimal("220")).restaurant(tandoorPalace).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Garlic Naan").price(new BigDecimal("60")).restaurant(tandoorPalace).cuisine(indian).build());
+
+        // Food items — Biryani Brothers
+        foodItemRepository.save(FoodItem.builder().name("Chicken Biryani").price(new BigDecimal("320")).restaurant(biryaniBrothers).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Veg Biryani").price(new BigDecimal("240")).restaurant(biryaniBrothers).cuisine(indian).build());
 
         // Food items — Spicy Garden (Indian)
         foodItemRepository.save(FoodItem.builder().name("Butter Chicken").price(new BigDecimal("320")).restaurant(spicyGarden).cuisine(indian).build());

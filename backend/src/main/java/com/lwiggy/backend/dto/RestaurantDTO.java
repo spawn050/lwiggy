@@ -1,10 +1,13 @@
 package com.lwiggy.backend.dto;
 
 import lombok.*;
+
 import java.util.List;
 
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RestaurantDTO {
     private Long id;
@@ -15,4 +18,5 @@ public class RestaurantDTO {
     private Double rating;
     private Integer ratingCount;
     private List<FoodItemDTO> foodItems;
+    private List<String> cuisines;
 }
