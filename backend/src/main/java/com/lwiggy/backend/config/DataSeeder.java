@@ -108,49 +108,49 @@ public class DataSeeder implements CommandLineRunner {
                 .build());
 
         // Food items — Tandoor Palace
-        foodItemRepository.save(FoodItem.builder().name("Butter Chicken").price(new BigDecimal("280")).restaurant(tandoorPalace).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Dal Makhani").price(new BigDecimal("220")).restaurant(tandoorPalace).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Garlic Naan").price(new BigDecimal("60")).restaurant(tandoorPalace).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Butter Chicken").price(new BigDecimal("280")).isVeg(false).restaurant(tandoorPalace).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Dal Makhani").price(new BigDecimal("220")).isVeg(true).restaurant(tandoorPalace).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Garlic Naan").price(new BigDecimal("60")).isVeg(true).restaurant(tandoorPalace).cuisine(indian).build());
 
         // Food items — Biryani Brothers
-        foodItemRepository.save(FoodItem.builder().name("Chicken Biryani").price(new BigDecimal("320")).restaurant(biryaniBrothers).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Veg Biryani").price(new BigDecimal("240")).restaurant(biryaniBrothers).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Chicken Biryani").price(new BigDecimal("320")).isVeg(false).restaurant(biryaniBrothers).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Veg Biryani").price(new BigDecimal("240")).isVeg(true).restaurant(biryaniBrothers).cuisine(indian).build());
 
         // Food items — Spicy Garden (Indian)
-        foodItemRepository.save(FoodItem.builder().name("Butter Chicken").price(new BigDecimal("320")).restaurant(spicyGarden).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Dal Makhani").price(new BigDecimal("220")).restaurant(spicyGarden).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Garlic Naan").price(new BigDecimal("60")).restaurant(spicyGarden).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Paneer Tikka").price(new BigDecimal("280")).restaurant(spicyGarden).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Butter Chicken").price(new BigDecimal("320")).isVeg(false).restaurant(spicyGarden).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Dal Makhani").price(new BigDecimal("220")).isVeg(true).restaurant(spicyGarden).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Garlic Naan").price(new BigDecimal("60")).isVeg(true).restaurant(spicyGarden).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Paneer Tikka").price(new BigDecimal("280")).isVeg(true).restaurant(spicyGarden).cuisine(indian).build());
 
         // Food items — Dragon Wok (Chinese)
-        foodItemRepository.save(FoodItem.builder().name("Kung Pao Chicken").price(new BigDecimal("340")).restaurant(dragonWok).cuisine(chinese).build());
-        foodItemRepository.save(FoodItem.builder().name("Fried Rice").price(new BigDecimal("180")).restaurant(dragonWok).cuisine(chinese).build());
-        foodItemRepository.save(FoodItem.builder().name("Spring Rolls").price(new BigDecimal("150")).restaurant(dragonWok).cuisine(chinese).build());
-        foodItemRepository.save(FoodItem.builder().name("Hakka Noodles").price(new BigDecimal("200")).restaurant(dragonWok).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Kung Pao Chicken").price(new BigDecimal("340")).isVeg(false).restaurant(dragonWok).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Fried Rice").price(new BigDecimal("180")).isVeg(false).restaurant(dragonWok).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Spring Rolls").price(new BigDecimal("150")).isVeg(true).restaurant(dragonWok).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Hakka Noodles").price(new BigDecimal("200")).isVeg(false).restaurant(dragonWok).cuisine(chinese).build());
 
         // Food items — Pune Kitchen (Indian)
-        foodItemRepository.save(FoodItem.builder().name("Misal Pav").price(new BigDecimal("120")).restaurant(puneKitchen).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Vada Pav").price(new BigDecimal("40")).restaurant(puneKitchen).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Pav Bhaji").price(new BigDecimal("160")).restaurant(puneKitchen).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Biryani").price(new BigDecimal("350")).restaurant(puneKitchen).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Misal Pav").price(new BigDecimal("120")).isVeg(true).restaurant(puneKitchen).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Vada Pav").price(new BigDecimal("40")).isVeg(true).restaurant(puneKitchen).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Pav Bhaji").price(new BigDecimal("160")).isVeg(true).restaurant(puneKitchen).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Biryani").price(new BigDecimal("350")).isVeg(false).restaurant(puneKitchen).cuisine(indian).build());
 
         // Food items — Pizza Villa (Italian)
-        foodItemRepository.save(FoodItem.builder().name("Margherita Pizza").price(new BigDecimal("299")).restaurant(pizzaVilla).cuisine(italian).build());
-        foodItemRepository.save(FoodItem.builder().name("Pasta Arrabiata").price(new BigDecimal("249")).restaurant(pizzaVilla).cuisine(italian).build());
-        foodItemRepository.save(FoodItem.builder().name("Garlic Bread").price(new BigDecimal("99")).restaurant(pizzaVilla).cuisine(italian).build());
-        foodItemRepository.save(FoodItem.builder().name("BBQ Chicken Pizza").price(new BigDecimal("349")).restaurant(pizzaVilla).cuisine(italian).build());
+        foodItemRepository.save(FoodItem.builder().name("Margherita Pizza").price(new BigDecimal("299")).isVeg(true).restaurant(pizzaVilla).cuisine(italian).build());
+        foodItemRepository.save(FoodItem.builder().name("Pasta Arrabiata").price(new BigDecimal("249")).isVeg(true).restaurant(pizzaVilla).cuisine(italian).build());
+        foodItemRepository.save(FoodItem.builder().name("Garlic Bread").price(new BigDecimal("99")).isVeg(true).restaurant(pizzaVilla).cuisine(italian).build());
+        foodItemRepository.save(FoodItem.builder().name("BBQ Chicken Pizza").price(new BigDecimal("349")).isVeg(false).restaurant(pizzaVilla).cuisine(italian).build());
 
         // Food items — South Spice (Indian)
-        foodItemRepository.save(FoodItem.builder().name("Masala Dosa").price(new BigDecimal("120")).restaurant(southSpice).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Idli Sambar").price(new BigDecimal("80")).restaurant(southSpice).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Chettinad Chicken").price(new BigDecimal("380")).restaurant(southSpice).cuisine(indian).build());
-        foodItemRepository.save(FoodItem.builder().name("Rasam Rice").price(new BigDecimal("140")).restaurant(southSpice).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Masala Dosa").price(new BigDecimal("120")).isVeg(true).restaurant(southSpice).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Idli Sambar").price(new BigDecimal("80")).isVeg(true).restaurant(southSpice).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Chettinad Chicken").price(new BigDecimal("380")).isVeg(false).restaurant(southSpice).cuisine(indian).build());
+        foodItemRepository.save(FoodItem.builder().name("Rasam Rice").price(new BigDecimal("140")).isVeg(true).restaurant(southSpice).cuisine(indian).build());
 
         // Food items — Noodle House (Chinese)
-        foodItemRepository.save(FoodItem.builder().name("Dim Sum").price(new BigDecimal("220")).restaurant(noodleHouse).cuisine(chinese).build());
-        foodItemRepository.save(FoodItem.builder().name("Wonton Soup").price(new BigDecimal("180")).restaurant(noodleHouse).cuisine(chinese).build());
-        foodItemRepository.save(FoodItem.builder().name("Chilli Chicken").price(new BigDecimal("300")).restaurant(noodleHouse).cuisine(chinese).build());
-        foodItemRepository.save(FoodItem.builder().name("Schezwan Noodles").price(new BigDecimal("220")).restaurant(noodleHouse).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Dim Sum").price(new BigDecimal("220")).isVeg(false).restaurant(noodleHouse).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Wonton Soup").price(new BigDecimal("180")).isVeg(false).restaurant(noodleHouse).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Chilli Chicken").price(new BigDecimal("300")).isVeg(false).restaurant(noodleHouse).cuisine(chinese).build());
+        foodItemRepository.save(FoodItem.builder().name("Schezwan Noodles").price(new BigDecimal("220")).isVeg(false).restaurant(noodleHouse).cuisine(chinese).build());
 
         System.out.println("Seed data loaded.");
     }

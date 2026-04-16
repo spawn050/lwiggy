@@ -46,7 +46,7 @@ export default function MenuItemCard({ item, restaurantId, restaurantName, resta
             <Box sx={{ position: 'relative', flexShrink: 0, mb: 2 }}>
                 <Box
                     component="img"
-                    src={item.image_url}
+                    src={item.image_url || 'https://placehold.co/130x100?text=Food'}
                     alt={item.name}
                     sx={{ width: 130, height: 100, borderRadius: 2, objectFit: 'cover', display: 'block' }}
                 />

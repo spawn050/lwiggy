@@ -70,6 +70,7 @@ public class RestaurantService {
                         .price(f.getPrice())
                         .imageUrl(f.getImageUrl())
                         .cuisineName(f.getCuisine() != null ? f.getCuisine().getName() : null)
+                        .isVeg(f.getIsVeg())
                         .build())
                 .toList();
 

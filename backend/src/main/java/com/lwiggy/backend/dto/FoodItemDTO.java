@@ -15,4 +15,5 @@ public class FoodItemDTO {
     private BigDecimal price;
     private String imageUrl;
     private String cuisineName;
+    private Boolean isVeg;
 }

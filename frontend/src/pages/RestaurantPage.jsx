@@ -104,7 +104,7 @@ export default function RestaurantPage() {
                 <Divider sx={{ mb: 2 }} />
 
                 <Box>
-                    {restaurant.menu.map((item) => (
+                    {restaurant.food_items.map((item) => (
                         <MenuItemCard
                             key={item.id}
                             item={item}

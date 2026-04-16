@@ -2,12 +2,15 @@ package com.lwiggy.backend.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "food_items")
-@Getter @Setter
-@NoArgsConstructor @AllArgsConstructor
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class FoodItem {
 
@@ -23,6 +26,9 @@ public class FoodItem {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name = "is_veg")
+    private Boolean isVeg;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
