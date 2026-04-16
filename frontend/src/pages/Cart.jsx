@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined'
 import { clearRestaurantItems } from '../store/cartSlice.js'
 import { placeOrder } from '../services/orderService.js'
+import { getUserProfile } from '../services/userService.js'
 
 export default function Cart() {
     const navigate = useNavigate()
@@ -38,13 +39,14 @@ export default function Cart() {
 
         setLoadingGroupId(group.restaurantId)
         try {
+            const user = await getUserProfile()
             await placeOrder({
                 restaurant_id: group.restaurantId,
-                total_price: total,
+                delivery_address: user.address,
+                delivery_pincode: user.pincode,
                 items: group.items.map((item) => ({
                     food_item_id: item.id,
                     quantity: item.quantity,
-                    price: item.price,
                 })),
             })
             dispatch(clearRestaurantItems(group.restaurantId))
