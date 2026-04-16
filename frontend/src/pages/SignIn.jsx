@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate, Link } from 'react-router-dom'
 import { Box, TextField, Button, Typography, Alert, CircularProgress } from '@mui/material'
 import { login } from '../store/authSlice.js'
-import { login as loginApi } from '../services/authService.js'
+import { login as loginApi, getCurrentUser } from '../services/authService.js'
 
 export default function SignIn() {
     const [email, setEmail] = useState('')
@@ -20,9 +20,10 @@ export default function SignIn() {
         setLoading(true)
 
         try {
-            const { user } = await loginApi(email, password)
-            dispatch(login(user))   
-            navigate('/')           
+            await loginApi(email, password)
+            const data = await getCurrentUser()
+            dispatch(login({ email: data.email, id: data.userId }))
+            navigate('/')
         } catch (err) {
             setError(err.message)
         } finally {

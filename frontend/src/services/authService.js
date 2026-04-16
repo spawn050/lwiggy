@@ -38,3 +38,19 @@ export async function getCurrentUser() {
 
     return response.json()
 }
+
+export async function register(name, email, password, address, pincode) {
+    const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ name, email, password, address, pincode }),
+    })
+
+    if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.message || 'Registration failed')
+    }
+
+    return response.json()
+}

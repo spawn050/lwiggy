@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Box, TextField, Button, Typography, MenuItem } from '@mui/material'
-import { useDispatch } from 'react-redux'
-import { login } from '../store/authSlice.js'
+import { Box, TextField, Button, Typography, MenuItem, Alert, CircularProgress } from '@mui/material'
+import { register } from '../services/authService.js'
 
 const CITIES = ['Mumbai', 'Bangalore', 'Pune']
 
@@ -13,13 +12,23 @@ export default function SignUp() {
     const [area, setArea] = useState('')
     const [city, setCity] = useState('')
     const [pincode, setPincode] = useState('')
+    const [error, setError] = useState('')
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
-    const dispatch = useDispatch()
 
     async function handleSubmit(e) {
         e.preventDefault()
-        dispatch(login({ name, email }))
-        navigate('/')
+        setError('')
+        setLoading(true)
+
+        try {
+            await register(name, email, password, `${area}, ${city}`, pincode)
+            navigate('/signin')
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -50,6 +59,8 @@ export default function SignUp() {
                 <Typography variant="h5" fontWeight={700} color="#3d4152">
                     Sign Up
                 </Typography>
+
+                {error && <Alert severity="error">{error}</Alert>}
 
                 <TextField
                     label="Name"
@@ -113,6 +124,7 @@ export default function SignUp() {
                 <Button
                     type="submit"
                     variant="contained"
+                    disabled={loading}
                     sx={{
                         bgcolor: '#FF5200',
                         '&:hover': { bgcolor: '#e04800' },
@@ -120,7 +132,7 @@ export default function SignUp() {
                         fontWeight: 700,
                     }}
                 >
-                    Sign Up
+                    {loading ? <CircularProgress size={22} sx={{ color: '#fff' }} /> : 'Sign Up'}
                 </Button>
 
                 <Typography variant="body2" textAlign="center" color="#686b78">
