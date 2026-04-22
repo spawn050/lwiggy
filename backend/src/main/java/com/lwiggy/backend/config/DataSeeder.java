@@ -183,8 +183,7 @@ public class DataSeeder implements CommandLineRunner {
     private static final String[][] CITIES = {
             {"Mumbai", "400"},
             {"Pune", "411"},
-            {"Bangalore", "560"},
-            {"New Delhi", "110"}
+            {"Bangalore", "560"}
     };
 
     // Street name prefixes/suffixes for addresses
