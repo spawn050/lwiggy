@@ -210,11 +210,12 @@ public class DataSeeder implements CommandLineRunner {
         CUISINE_TEMPLATES.forEach(template -> cuisineRepository.save(template.cuisine));
         for (String[] cityData : CITIES) {
             String cityName = cityData[0];
-            String pincode = cityData[1] + random.nextInt(100, 999);
+            String pincode;
 
             System.out.println("Creating restaurants for " + cityName + "...");
 
             for (int i = 0; i < NO_OF_RESTAURANTS_PER_CITY; i++) {
+                pincode = cityData[1] + random.nextInt(100, 999);
                 Restaurant restaurant = restaurantRepository.save(createRandomRestaurant(cityName, pincode));
                 addFoodItemsToRestaurant(restaurant);
             }
