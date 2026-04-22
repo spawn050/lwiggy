@@ -19,6 +19,111 @@ import java.util.*;
 public class DataSeeder implements CommandLineRunner {
     public static final int NO_OF_RESTAURANTS_PER_CITY = 1000;
 
+    private static final List<String> RESTAURANT_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1667388969250-1c7220bf3f37?w=600&q=80",
+            "https://images.unsplash.com/photo-1538333581680-29dd4752ddf2?w=600&q=80",
+            "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80",
+            "https://images.unsplash.com/photo-1729394405518-eaf2a0203aa7?w=600&q=80",
+            "https://images.unsplash.com/photo-1667388968964-4aa652df0a9b?w=600&q=80",
+            "https://images.unsplash.com/photo-1560130934-590b85fc08e7?w=600&q=80",
+            "https://images.unsplash.com/photo-1494346480775-936a9f0d0877?w=600&q=80",
+            "https://images.unsplash.com/photo-1538334421852-687c439c92f4?w=600&q=80",
+            "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=600&q=80",
+            "https://images.unsplash.com/photo-1729394405014-0a6bd5c63c59?w=600&q=80",
+            "https://images.unsplash.com/photo-1729394404997-c95e5c5dd736?w=600&q=80",
+            "https://images.unsplash.com/photo-1686100509942-e7460e8b80cb?w=600&q=80",
+            "https://images.unsplash.com/photo-1709548145082-04d0cde481d4?w=600&q=80",
+            "https://images.unsplash.com/photo-1551530241-1ccbaa7a9a84?w=600&q=80",
+            "https://images.unsplash.com/photo-1541856644905-bd40b138cbbd?w=600&q=80",
+            "https://images.unsplash.com/photo-1737116846855-26bfe6387515?w=600&q=80",
+            "https://images.unsplash.com/photo-1654483949849-ed21ae4fb2c1?w=600&q=80",
+            "https://images.unsplash.com/photo-1765099271664-614c541196ef?w=600&q=80",
+            "https://images.unsplash.com/photo-1744776411223-71fb5794617a?w=600&q=80",
+            "https://images.unsplash.com/photo-1744776411221-702f2848b0b2?w=600&q=80"
+    );
+
+    private static final List<String> PIZZA_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80",
+            "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400&q=80",
+            "https://images.unsplash.com/photo-1534308983496-4fabb1a015ee?w=400&q=80",
+            "https://images.unsplash.com/photo-1579751626657-72bc17010498?w=400&q=80",
+            "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&q=80",
+            "https://images.unsplash.com/photo-1506354666786-959d6d497f1a?w=400&q=80"
+    );
+
+    private static final List<String> PASTA_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&q=80",
+            "https://images.unsplash.com/photo-1473093226795-af9932fe5856?w=400&q=80",
+            "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&q=80",
+            "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&q=80",
+            "https://images.unsplash.com/photo-1579684947550-22e945225d9a?w=400&q=80",
+            "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&q=80"
+    );
+
+    private static final List<String> RISOTTO_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1682428617976-f25633ed8469?w=400&q=80",
+            "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&q=80",
+            "https://images.unsplash.com/photo-1581073746562-e7fd2422f0eb?w=400&q=80",
+            "https://images.unsplash.com/photo-1461009683693-342af2f2d6ce?w=400&q=80"
+    );
+
+    private static final List<String> BIRYANI_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1697155406055-2db32d47ca07?w=400&q=80",
+            "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=400&q=80",
+            "https://images.unsplash.com/photo-1633945274309-2c16c9682a8c?w=400&q=80",
+            "https://images.unsplash.com/photo-1684409642850-b48e5ab8e67c?w=400&q=80",
+            "https://images.unsplash.com/photo-1710091691802-7dedb8af9a77?w=400&q=80",
+            "https://images.unsplash.com/photo-1747518596371-ab78bd612d09?w=400&q=80"
+    );
+
+    private static final List<String> CURRY_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1710091691780-c7eb0dc50cf8?w=400&q=80",
+            "https://images.unsplash.com/photo-1767114915989-c6ab3c8fc42e?w=400&q=80",
+            "https://images.unsplash.com/photo-1683533738338-19b9a22c6405?w=400&q=80",
+            "https://images.unsplash.com/photo-1772730064951-89b427965dbc?w=400&q=80",
+            "https://images.unsplash.com/photo-1764311792750-c10a9b45178f?w=400&q=80",
+            "https://images.unsplash.com/photo-1697155406121-9f327348c43a?w=400&q=80"
+    );
+
+    private static final List<String> SOUTH_INDIAN_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=400&q=80",
+            "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=400&q=80",
+            "https://images.unsplash.com/photo-1694849789325-914b71ab4075?w=400&q=80",
+            "https://images.unsplash.com/photo-1683533678036-46ec6a0163d9?w=400&q=80"
+    );
+
+    private static final List<String> NOODLES_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1772729219168-af0f0e57bb9c?w=400&q=80",
+            "https://images.unsplash.com/photo-1652937916838-09b9c2ff8b45?w=400&q=80",
+            "https://images.unsplash.com/photo-1767324672643-c4979362f922?w=400&q=80",
+            "https://images.unsplash.com/photo-1761807766309-13758814cd6c?w=400&q=80",
+            "https://images.unsplash.com/photo-1634864572872-a01c21e388d4?w=400&q=80",
+            "https://images.unsplash.com/photo-1760699609029-01bcc566ab50?w=400&q=80"
+    );
+
+    private static final List<String> FRIED_RICE_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=400&q=80",
+            "https://images.unsplash.com/photo-1609570324378-ec0c4c9b6ba8?w=400&q=80",
+            "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=400&q=80",
+            "https://images.unsplash.com/photo-1723691802798-fa6efc67b2c9?w=400&q=80"
+    );
+
+    private static final List<String> DUMPLINGS_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1595424265370-3e02d3e6c10c?w=400&q=80",
+            "https://images.unsplash.com/photo-1775883379159-6b9c8e3ed8df?w=400&q=80",
+            "https://images.unsplash.com/photo-1762418967889-10abec43c325?w=400&q=80",
+            "https://images.unsplash.com/photo-1585144570566-1a24c4502bbe?w=400&q=80"
+    );
+
+    private static final List<String> DEFAULT_FOOD_IMAGES = List.of(
+            "https://images.unsplash.com/photo-1539136788836-5699e78bfc75?w=400&q=80",
+            "https://images.unsplash.com/photo-1539735257177-0d3949225f96?w=400&q=80",
+            "https://images.unsplash.com/photo-1539735776517-befcae86494d?w=400&q=80",
+            "https://images.unsplash.com/photo-1519077336050-4ca5cac9d64f?w=400&q=80",
+            "https://images.unsplash.com/photo-1535400255456-984241443b29?w=400&q=80",
+            "https://images.unsplash.com/photo-1669472546359-418a98630699?w=400&q=80"
+    );
+
     private static final String[] RESTAURANT_NAME_WORDS = {
             "Spicy", "Garden", "Kitchen", "Palace", "Wok", "Tandoor", "Biryani", "Curry",
             "Flavors", "Taste", "Hub", "Corner", "House", "Point", "Zone", "Express",
@@ -179,14 +284,12 @@ public class DataSeeder implements CommandLineRunner {
             )
     );
 
-    // Cities with their pincode prefixes
     private static final String[][] CITIES = {
             {"Mumbai", "400"},
             {"Pune", "411"},
             {"Bangalore", "560"}
     };
 
-    // Street name prefixes/suffixes for addresses
     private static final String[] STREET_PREFIXES = {
             "MG Road", "Main Street", "Station Road", "Market Street", "Highway",
             "Park Avenue", "Lake View", "Hill Road", "College Road", "Temple Street",
@@ -202,7 +305,6 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        // skip if data already exists
         if (cuisineRepository.count() > 0) {
             return;
         }
@@ -227,12 +329,11 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private Restaurant createRandomRestaurant(String cityName, String pincode) {
-        String name = generateRestaurantName();
         return Restaurant.builder()
-                .name(name)
+                .name(generateRestaurantName())
                 .address(generateAddress(cityName))
                 .pincode(pincode)
-                .imageUrl("https://placehold.co/400x200?text=" + name.replace(" ", "+"))
+                .imageUrl(RESTAURANT_IMAGES.get(random.nextInt(RESTAURANT_IMAGES.size())))
                 .rating(Math.round((3.0 + (random.nextDouble() * 2.0)) * 10.0) / 10.0)
                 .ratingCount(random.nextInt(4901) + 100)
                 .build();
@@ -253,6 +354,38 @@ public class DataSeeder implements CommandLineRunner {
         return streetNumber + " " + street + ", " + cityName;
     }
 
+    private String getImageForFoodItem(String name) {
+        String lower = name.toLowerCase();
+        List<String> pool;
+        if (lower.contains("pizza")) {
+            pool = PIZZA_IMAGES;
+        } else if (lower.contains("spaghetti") || lower.contains("penne") || lower.contains("fettuccine")
+                || lower.contains("linguine") || lower.contains("rigatoni") || lower.contains("farfalle")
+                || lower.contains("fusilli") || lower.contains("macaroni") || lower.contains("gnocchi")
+                || lower.contains("ravioli") || lower.contains("tortellini") || lower.contains("lasagna")
+                || lower.contains("cannelloni") || lower.contains("pasta")) {
+            pool = PASTA_IMAGES;
+        } else if (lower.contains("risotto")) {
+            pool = RISOTTO_IMAGES;
+        } else if (lower.contains("biryani")) {
+            pool = BIRYANI_IMAGES;
+        } else if (lower.contains("dosa") || lower.contains("idli") || lower.contains("uttapam")
+                || lower.contains("vada") || lower.contains("pongal") || lower.contains("upma")) {
+            pool = SOUTH_INDIAN_IMAGES;
+        } else if (lower.contains("noodles") || lower.contains("chow mein") || lower.contains("lo mein")
+                || lower.contains("ramen") || lower.contains("udon")) {
+            pool = NOODLES_IMAGES;
+        } else if (lower.contains("fried rice")) {
+            pool = FRIED_RICE_IMAGES;
+        } else if (lower.contains("momos") || lower.contains("dumpling") || lower.contains("dim sum")
+                || lower.contains("wonton") || lower.contains("bao") || lower.contains("potsticker")) {
+            pool = DUMPLINGS_IMAGES;
+        } else {
+            pool = DEFAULT_FOOD_IMAGES;
+        }
+        return pool.get(random.nextInt(pool.size()));
+    }
+
     private void addFoodItemsToRestaurant(Restaurant restaurant) {
         CuisineTemplate cuisineTemplate = CUISINE_TEMPLATES.get(random.nextInt(CUISINE_TEMPLATES.size()));
         cuisineTemplate.vegFoodItems
@@ -263,6 +396,7 @@ public class DataSeeder implements CommandLineRunner {
                         .name(vegFood)
                         .price(new BigDecimal(random.nextInt(401) + 100))
                         .isVeg(true)
+                        .imageUrl(getImageForFoodItem(vegFood))
                         .restaurant(restaurant)
                         .cuisine(cuisineTemplate.cuisine)
                         .build()));
@@ -274,6 +408,7 @@ public class DataSeeder implements CommandLineRunner {
                         .name(nonVegFood)
                         .price(new BigDecimal(random.nextInt(401) + 100))
                         .isVeg(false)
+                        .imageUrl(getImageForFoodItem(nonVegFood))
                         .restaurant(restaurant)
                         .cuisine(cuisineTemplate.cuisine)
                         .build()));
