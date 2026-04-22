@@ -1,26 +1,36 @@
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Box, Container, Grid, Typography, CircularProgress } from '@mui/material'
 import RestaurantCard from '../components/RestaurantCard.jsx'
-import { getRestaurants } from '../services/restaurantService.js'
+import { getRestaurants, searchRestaurants } from '../services/restaurantService.js'
+
+const PINCODE = '400439'
 
 export default function Home() {
     const [restaurants, setRestaurants] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
+    const [searchParams] = useSearchParams()
+    const query = searchParams.get('q') || ''
 
     useEffect(() => {
-        async function fetchRestaurants() {
+        const timer = setTimeout(async () => {
+            setLoading(true)
+            setError('')
             try {
-                const data = await getRestaurants('400001')
+                const data = query.trim()
+                    ? await searchRestaurants(PINCODE, query.trim())
+                    : await getRestaurants(PINCODE)
                 setRestaurants(data)
             } catch (err) {
                 setError(err.message)
             } finally {
                 setLoading(false)
             }
-        }
-        fetchRestaurants()
-    }, [])
+        }, 400)
+
+        return () => clearTimeout(timer)
+    }, [query])
 
     if (loading) {
         return (
@@ -42,15 +52,26 @@ export default function Home() {
         <Box sx={{ bgcolor: '#ffffff', minHeight: '100vh' }}>
             <Container maxWidth="lg" sx={{ py: 4 }}>
                 <Typography variant="h5" fontWeight={700} color="#3d4152" sx={{ mb: 3 }}>
-                    Restaurants near you
+                    {query ? `Results for "${query}"` : 'Restaurants near you'}
                 </Typography>
-                <Grid container spacing={3}>
-                    {restaurants.map((restaurant) => (
-                        <Grid size={{ xs: 12, sm: 6, md: 3 }} key={restaurant.id}>
-                            <RestaurantCard restaurant={restaurant} />
-                        </Grid>
-                    ))}
-                </Grid>
+                {restaurants.length === 0 ? (
+                    <Box sx={{ textAlign: 'center', mt: 8 }}>
+                        <Typography variant="h6" color="#93959f">No restaurants found</Typography>
+                        {query && (
+                            <Typography variant="body2" color="#93959f" sx={{ mt: 1 }}>
+                                Try searching for something else
+                            </Typography>
+                        )}
+                    </Box>
+                ) : (
+                    <Grid container spacing={3}>
+                        {restaurants.map((restaurant) => (
+                            <Grid size={{ xs: 12, sm: 6, md: 3 }} key={restaurant.id}>
+                                <RestaurantCard restaurant={restaurant} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                )}
             </Container>
         </Box>
     )

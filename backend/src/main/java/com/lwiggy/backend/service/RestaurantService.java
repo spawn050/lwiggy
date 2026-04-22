@@ -8,6 +8,7 @@ import com.lwiggy.backend.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -66,7 +67,7 @@ public class RestaurantService {
 
     private List<RestaurantDTO> fetchFromNearbyPincodes(String pincode,
                                                         Function<String, List<RestaurantDTO>> fetcher) {
-        var result = fetcher.apply(pincode);
+        var result = new ArrayList<>(fetcher.apply(pincode));
         int pincodeNumber = Integer.parseInt(pincode);
         int offset = 1;
         while (result.size() < MAX_NO_OF_RESTAURANTS_IN_RESULT && offset <= 5) {

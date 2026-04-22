@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import {
     AppBar, Toolbar, Container, Box, InputBase,
     IconButton, Button, Badge, Drawer, List,
@@ -24,7 +24,20 @@ export default function Navbar() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const location = useLocation()
+    const [searchParams] = useSearchParams()
     const isAuthPage = ['/signin', '/signup'].includes(location.pathname)
+
+    const [searchValue, setSearchValue] = useState(searchParams.get('q') || '')
+
+    useEffect(() => {
+        setSearchValue(searchParams.get('q') || '')
+    }, [searchParams])
+
+    function handleSearchChange(value) {
+        setSearchValue(value)
+        const target = value.trim() ? `/?q=${encodeURIComponent(value.trim())}` : '/'
+        navigate(target, { replace: location.pathname === '/' })
+    }
 
     async function handleSignOut() {
         await logoutApi()
@@ -67,6 +80,8 @@ export default function Navbar() {
                                         <InputBase
                                             autoFocus
                                             placeholder="Search for restaurants and food"
+                                            value={searchValue}
+                                            onChange={(e) => handleSearchChange(e.target.value)}
                                             sx={{ flex: 1, fontSize: 14, color: '#3d4152' }}
                                             inputProps={{ 'aria-label': 'search' }}
                                         />
@@ -96,6 +111,8 @@ export default function Navbar() {
                                         <SearchIcon sx={{ color: '#686b78', fontSize: 20 }} />
                                         <InputBase
                                             placeholder="Search for restaurants and food"
+                                            value={searchValue}
+                                            onChange={(e) => handleSearchChange(e.target.value)}
                                             sx={{ flex: 1, fontSize: 14, color: '#3d4152' }}
                                             inputProps={{ 'aria-label': 'search' }}
                                         />

@@ -8,6 +8,16 @@ export async function getRestaurants(pincode) {
     return res.json()
 }
 
+export async function searchRestaurants(pincode, query) {
+    const res = await fetch(`/api/restaurants?location=${pincode}&query=${encodeURIComponent(query)}`, {
+        credentials: 'include',
+    })
+    if (!res.ok) {
+        throw new Error('Failed to fetch restaurants')
+    }
+    return res.json()
+}
+
 export async function getRestaurantById(id) {
     const res = await fetch(`/api/restaurants/${id}`, {
         credentials: 'include',
