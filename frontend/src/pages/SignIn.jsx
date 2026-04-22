@@ -22,7 +22,7 @@ export default function SignIn() {
         try {
             await loginApi(email, password)
             const data = await getCurrentUser()
-            dispatch(login({ email: data.email, id: data.userId }))
+            dispatch(login({ email: data.email, id: data.userId, pincode: data.pincode }))
             navigate('/')
         } catch (err) {
             setError(err.message)

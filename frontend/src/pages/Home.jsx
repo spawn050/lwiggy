@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { Box, Container, Grid, Typography, CircularProgress } from '@mui/material'
 import RestaurantCard from '../components/RestaurantCard.jsx'
 import { getRestaurants, searchRestaurants } from '../services/restaurantService.js'
 
-const PINCODE = '400439'
+const DEFAULT_PINCODE = '400439'
 
 export default function Home() {
     const [restaurants, setRestaurants] = useState([])
@@ -12,6 +13,10 @@ export default function Home() {
     const [error, setError] = useState('')
     const [searchParams] = useSearchParams()
     const query = searchParams.get('q') || ''
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
+    const userPincode = useSelector((state) => state.auth.user?.pincode)
+
+    const pincode = isLoggedIn && userPincode ? userPincode : DEFAULT_PINCODE
 
     useEffect(() => {
         const timer = setTimeout(async () => {
@@ -19,8 +24,8 @@ export default function Home() {
             setError('')
             try {
                 const data = query.trim()
-                    ? await searchRestaurants(PINCODE, query.trim())
-                    : await getRestaurants(PINCODE)
+                    ? await searchRestaurants(pincode, query.trim())
+                    : await getRestaurants(pincode)
                 setRestaurants(data)
             } catch (err) {
                 setError(err.message)
@@ -30,7 +35,7 @@ export default function Home() {
         }, 400)
 
         return () => clearTimeout(timer)
-    }, [query])
+    }, [query, pincode])
 
     if (loading) {
         return (

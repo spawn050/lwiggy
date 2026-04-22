@@ -88,10 +88,14 @@ public class AuthController {
         if (token == null) return ResponseEntity.status(401).build();
         try {
             Claims claims = jwtUtil.validateToken(token);
-            return ResponseEntity.ok(Map.of(
-                    "email", claims.getSubject(),
-                    "userId", claims.get("userId")
-            ));
+            Long userId = ((Number) claims.get("userId")).longValue();
+            return repo.findById(userId)
+                    .map(user -> ResponseEntity.ok(Map.of(
+                            "email", user.getEmail(),
+                            "userId", user.getId(),
+                            "pincode", user.getPincode()
+                    )))
+                    .orElseGet(() -> ResponseEntity.status(401).build());
         } catch (Exception e) {
             return ResponseEntity.status(401).build();
         }
