@@ -5,57 +5,28 @@ import com.lwiggy.backend.dto.RestaurantDTO;
 import com.lwiggy.backend.exception.ResourceNotFoundException;
 import com.lwiggy.backend.repository.FoodItemRepository;
 import com.lwiggy.backend.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantService {
+    private static final int MAX_NO_OF_RESTAURANTS_IN_RESULT = 10;
 
     private final RestaurantRepository restaurantRepository;
     private final FoodItemRepository foodItemRepository;
 
-    public RestaurantService(RestaurantRepository restaurantRepository,
-                             FoodItemRepository foodItemRepository) {
-        this.restaurantRepository = restaurantRepository;
-        this.foodItemRepository = foodItemRepository;
-    }
-
     public List<RestaurantDTO> getRestaurantsByLocation(String pincode) {
-        return restaurantRepository.findByPincode(pincode)
-                .stream()
-                .map(r -> RestaurantDTO.builder()
-                        .id(r.getId())
-                        .name(r.getName())
-                        .address(r.getAddress())
-                        .pincode(r.getPincode())
-                        .imageUrl(r.getImageUrl())
-                        .rating(r.getRating())
-                        .ratingCount(r.getRatingCount())
-                        .cuisines(foodItemRepository.findDistinctCuisineNamesByRestaurantId(r.getId()))
-                        .build())
-                .toList();
+        return fetchFromNearbyPincodes(pincode, this::getRestaurantsAtPincode);
     }
 
     public List<RestaurantDTO> searchRestaurants(String query, String pincode) {
-        return restaurantRepository.findByPincode(pincode)
-                .stream()
-                .filter(r -> r.getName().toLowerCase().contains(query.toLowerCase())
-                        || foodItemRepository.findByRestaurantId(r.getId())
-                        .stream()
-                        .anyMatch(f -> f.getName().toLowerCase().contains(query.toLowerCase())))
-                .map(r -> RestaurantDTO.builder()
-                        .id(r.getId())
-                        .name(r.getName())
-                        .address(r.getAddress())
-                        .pincode(r.getPincode())
-                        .imageUrl(r.getImageUrl())
-                        .rating(r.getRating())
-                        .ratingCount(r.getRatingCount())
-                        .cuisines(foodItemRepository.findDistinctCuisineNamesByRestaurantId(r.getId()))
-                        .build())
-                .toList();
+        return fetchFromNearbyPincodes(pincode, p -> getRestaurantsAtPincode(p).stream().filter(r -> matchesQuery(r, query)).toList());
     }
 
     public RestaurantDTO getRestaurantById(Long id) {
@@ -91,5 +62,43 @@ public class RestaurantService {
                 .foodItems(foodItems)
                 .cuisines(cuisines)
                 .build();
+    }
+
+    private List<RestaurantDTO> fetchFromNearbyPincodes(String pincode,
+                                                        Function<String, List<RestaurantDTO>> fetcher) {
+        var result = fetcher.apply(pincode);
+        int pincodeNumber = Integer.parseInt(pincode);
+        int offset = 1;
+        while (result.size() < MAX_NO_OF_RESTAURANTS_IN_RESULT && offset <= 5) {
+            result.addAll(fetcher.apply(String.valueOf(pincodeNumber + offset)));
+            result.addAll(fetcher.apply(String.valueOf(pincodeNumber - offset)));
+            ++offset;
+        }
+        return result.size() > MAX_NO_OF_RESTAURANTS_IN_RESULT ?
+                result.subList(0, MAX_NO_OF_RESTAURANTS_IN_RESULT)
+                : result;
+    }
+
+    private List<RestaurantDTO> getRestaurantsAtPincode(String pincode) {
+        return restaurantRepository.findByPincode(pincode)
+                .stream()
+                .map(r -> RestaurantDTO.builder()
+                        .id(r.getId())
+                        .name(r.getName())
+                        .address(r.getAddress())
+                        .pincode(r.getPincode())
+                        .imageUrl(r.getImageUrl())
+                        .rating(r.getRating())
+                        .ratingCount(r.getRatingCount())
+                        .cuisines(foodItemRepository.findDistinctCuisineNamesByRestaurantId(r.getId()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    private boolean matchesQuery(RestaurantDTO restaurant, String searchQuery) {
+        return restaurant.getName().toLowerCase().contains(searchQuery.toLowerCase())
+                || foodItemRepository.findByRestaurantId(restaurant.getId())
+                        .stream()
+                        .anyMatch(f -> f.getName().toLowerCase().contains(searchQuery.toLowerCase()));
     }
 }
