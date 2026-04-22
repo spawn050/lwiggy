@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class RestaurantService {
-    private static final int MAX_NO_OF_RESTAURANTS_IN_RESULT = 10;
+    private static final int MAX_NO_OF_RESTAURANTS_IN_RESULT = 20;
 
     private final RestaurantRepository restaurantRepository;
     private final FoodItemRepository foodItemRepository;
