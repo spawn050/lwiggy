@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./readmeAssets/lwiggy.gif" width="400"/>
+  <img src="./readmeAssets/lwiggy.gif" width="800" height="800"/>
 </p>
 <br>
 <h1 align="center" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">Lwiggy</h1>
